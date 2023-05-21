@@ -155,20 +155,28 @@ RUN python3 -m pip install --upgrade setuptools && \
     ./waf -j4 && \
     ./waf install && \
     ldconfig && \
+    cd .. && \
     rm -rf ndn-cxx && \
     git clone --depth=1 --recursive --branch NFD-22.12 https://github.com/named-data/NFD.git && \
     cd NFD && \
     ./waf configure && \
     ./waf -j2 && \
     ./waf install && \
+    mkdir -p /usr/local/etc/ndn && \
     cp /usr/local/etc/ndn/nfd.conf.sample /usr/local/etc/ndn/nfd.conf && \
+    cd .. && \
     rm -rf NFD && \
     git clone --depth=1 --recursive --branch ndn-tools-22.12 https://github.com/named-data/ndn-tools.git && \
     cd ndn-tools && \
     ./waf configure && \
     ./waf -j2 && \
     ./waf install && \
+    cd .. && \
     rm -rf ndn-tools && \
-    mkdir -p /usr/local/etc/ndn && \
-    sudo cp /usr/local/etc/ndn/nfd.conf.sample /usr/local/etc/ndn/nfd.conf && \
+    git clone --depth=1 --recursive --branch main https://github.com/yoursunny/ndn6-tools.git && \
+    cd ndn6-tools && \
+    make && \
+    make install && \
+    cd .. && \
+    rm -rf ndn6-tools && \
     ndnsec key-gen /develop | ndnsec cert-install -
